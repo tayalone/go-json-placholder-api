@@ -62,7 +62,7 @@ var todoRepo todos = todos{
 	todo{
 		UserID:    1,
 		ID:        2,
-		Title:     "Lorem 1",
+		Title:     "Lorem 2",
 		Completed: true,
 	},
 }
