@@ -1,0 +1,40 @@
+### get api status
+GET http://localhost:5000/status
+###
+
+### get all todo items
+GET http://localhost:5000/todos
+###
+
+### get todo by id
+GET http://localhost:5000/todos/1
+###
+
+
+### create todo item
+POST http://localhost:5000/todos
+content-type: application/json
+
+{
+
+}
+###
+
+### update todo item
+PATCH  http://localhost:5000/todos
+content-type: application/json
+
+{
+
+}
+###
+
+
+### delete todo item by id
+DELETE http://localhost:5000/todos/1
+content-type: application/json
+
+{
+    
+}
+###
