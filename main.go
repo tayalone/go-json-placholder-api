@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -27,7 +28,7 @@ func (ts todos) findAll() []todo {
 }
 
 func (ts todos) findByID(i int) (todo, error) {
-	if len(ts)-1 < i {
+	if i < 0 || len(ts)-1 < i {
 		return todo{}, errors.New("id doest does not exist")
 	}
 	return ts[i], nil
@@ -76,18 +77,39 @@ func main() {
 	})
 	rTodo := r.Group("/todos")
 	{
+
 		rTodo.GET("/", func(c *gin.Context) {
+			todos := todoRepo.findAll()
+
 			c.JSON(http.StatusOK, gin.H{
-				"from":    "Get /todos",
 				"message": "OK",
+				"todos":   todos,
 			})
 		})
 		rTodo.GET("/:id", func(c *gin.Context) {
-			id := c.Param("id")
+			idStr := c.Param("id")
+
+			id, err := strconv.ParseInt(idStr, 10, 64)
+			if err != nil {
+				c.JSON(http.StatusBadRequest, gin.H{
+					"message": "Fail",
+					"key":     "ID_MUST_BE_NUMBER",
+				})
+				return
+			}
+
+			todo, err := todoRepo.findByID(int(id))
+			if err != nil {
+				c.JSON(http.StatusBadRequest, gin.H{
+					"message": "Fail",
+					"key":     "NOT_FOUND_TODO",
+				})
+				return
+			}
 
 			c.JSON(http.StatusOK, gin.H{
-				"from":    fmt.Sprintf("Get /todos/%s", id),
 				"message": "OK",
+				"todo":    todo,
 			})
 		})
 		rTodo.POST("/", func(c *gin.Context) {

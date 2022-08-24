@@ -7,7 +7,7 @@ GET http://localhost:5000/todos
 ###
 
 ### get todo by id
-GET http://localhost:5000/todos/1
+GET http://localhost:5000/todos/-1
 ###
 
 
@@ -35,6 +35,6 @@ DELETE http://localhost:5000/todos/1
 content-type: application/json
 
 {
-    
+
 }
 ###
